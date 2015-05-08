@@ -5,7 +5,4 @@ class Category < ActiveRecord::Base
 	def recent_videos	
     videos.order('created_at desc').limit(6)
 	end
-
-
-
 end
