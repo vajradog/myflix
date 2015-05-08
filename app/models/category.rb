@@ -1,12 +1,12 @@
 class Category < ActiveRecord::Base
-	has_many :videos, -> { order("title")}
+	has_many :videos
 	validates :name, presence: true
 
 	def recent_videos	
 		if self.videos.count < 6
-		  videos.all
+		  videos
 		else
-			videos.limit(6).order("created_at DESC")
+			videos.order('created_at desc').limit(6)
 		end
 	end
 

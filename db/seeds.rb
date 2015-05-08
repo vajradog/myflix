@@ -36,7 +36,7 @@ Video.create(
   description: "A prince becomes involved in the struggle between a forest princess and the encroachment of mechanization.",
   small_cover_url: "/tmp/mononoke.jpg",
   large_cover_url: "/tmp/large_mononoke.jpg",
-  category_id: cat1.id, created_at: 1.day.ago )
+  category_id: cat1.id, created_at: 5.days.ago)
 
 Video.create(
   title: "Porco Rosso", 
@@ -57,7 +57,7 @@ Video.create(
   description: "In Italy in the 1930s, sky pirates in biplanes terrorize wealthy cruise ships as they sail the Adriatic Sea. The only pilot brave enough to stop the scourge is the mysterious Porco Rosso (Shuichiro Moriyama), a former World War I flying ace who was somehow turned into a pig during the war.",
   small_cover_url: "/tmp/rosso.jpg",
   large_cover_url: "/tmp/large_rosso.jpg",
-  category_id: cat1.id)
+  category_id: cat1.id, created_at: 4.days.ago)
 
 Video.create(
   title: "Breaking Bad", 
