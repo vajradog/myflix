@@ -30,5 +30,4 @@ describe Category do
       expect(subject).to eq([breaking_bad, west_wing])
     end
   end
-  
 end
