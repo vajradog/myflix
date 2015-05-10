@@ -8,3 +8,13 @@
           %h3= @video.title
           %span Rating: 4.5/5.0
         %p= @video.description
+
+= form_for [@video, Review.new] do |f|
+  = f.select :rating, options_for_select([5,4,3,2,1].map {|number| [pluralize(number, "Star")]})
+  = f.text_area :content
+  = f.submit
+  = link_to "Cancel", @video
+- @reviews.each do |review|
+  = review.rating
+  = review.user.full_name
+  = review.content

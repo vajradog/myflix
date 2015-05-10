@@ -59,9 +59,13 @@ Video.create(
   large_cover_url: "/tmp/large_rosso.jpg",
   category_id: cat1.id, created_at: 4.days.ago)
 
-Video.create(
+breaking_bad = Video.create(
   title: "Breaking Bad", 
   description: "A high school chemistry teacher dying of cancer teams with a former student to manufacture and sell crystal meth to secure his family\'s future.",
   small_cover_url: "/tmp/breaking_bad.jpg",
   large_cover_url: "/tmp/breaking_bad_large.jpg",
   category_id: cat2.id)
+
+thupten = User.create(full_name: "Thupten Nyima", email: "thupten@example.com", password: "password")
+Review.create(user: thupten, video: breaking_bad, rating: 2, content: "This is a so so TV show")
+Review.create(user: thupten, video: breaking_bad, rating: 5, content: "Actually I love it")
