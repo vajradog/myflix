@@ -4,29 +4,25 @@ describe Category do
   it { should have_many(:videos)}
   it { should validate_presence_of(:name)}
 
-  describe "recent videos" do 
-    it "should show only 6 videos if more than 6 videos exists in a category" do 
-      thriller = Category.create(name: "thriller")
-      7.times do 
-        video = Video.create(title:"24", description: "Fast thriller", category_id: thriller.id)
-      end
-      expect(thriller.recent_videos.count).to be(6)
+  describe ".recent_videos" do 
+
+    let(:drama) { Category.create(name: "Drama") }
+    let(:subject) { drama.recent_videos }
+
+    it "shows only 6 videos if more than 6 videos exists in a category" do 
+      Fabricate.times(7, :video, category_id: drama.id)
+      expect(subject.count).to eq(6)
     end
 
-    it "should show all videos if less than 6 videos exists in a category" do
-      comedy = Category.create(name: "comedy")
-      4.times do 
-        video = Video.create(title: "Family Guy", description: "Funny show", category_id: comedy.id)
-      end
-      expect(comedy.recent_videos.count).to eq(comedy.videos.count)
+    it "shows all videos if less than 6 videos exists in a category" do
+      Fabricate.times(4, :video, category_id: drama.id)
+      expect(subject.count).to eq(drama.videos.count)
     end
 
-    it "should show all videos order by created_at" do 
-      drama = Category.create(name: "comedy")
-      west_wing = Video.create(title: "West Wing", description: "Political Thriller", category_id: drama.id, created_at: 1.day.ago)
-      breaking_bad = Video.create(title: "Breaking Bad", description: "Political Thriller", category_id: drama.id)
-      expect(drama.recent_videos).to eq([breaking_bad, west_wing])
-
+    it "shows all videos order by created_at" do 
+      west_wing = Fabricate(:video, title:"West Wing", category_id: drama.id, created_at: 2.days.ago)
+      breaking_bad = Fabricate(:video, title: "Breaking Bad", category_id: drama.id)
+      expect(subject).to eq([breaking_bad, west_wing])
     end
   end
 end
