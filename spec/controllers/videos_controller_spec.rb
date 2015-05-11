@@ -42,7 +42,6 @@ describe VideosController do
        expect(assigns(:results)).to eq ([])
      end
    end
-    
 
     it "redirects to sign_in_path for unauthenticated user" do
       get :search, search_term: "ponyo"

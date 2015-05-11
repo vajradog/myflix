@@ -6,12 +6,11 @@ describe Video do
   it { should validate_presence_of(:description)}
   it { should have_many(:reviews).order("created_at DESC")}
 
-  describe "search by title" do 
+  describe ".search_by_title" do 
     before do 
       @totoro = Fabricate(:video, title: "totoro")
       @ponyo = Fabricate(:video, title: "Ponyo", created_at: 1.day.ago)
     end
-   
 
     it "returns empty array when match not found" do 
       expect(Video.search_by_title("Whatever")).to eq([])

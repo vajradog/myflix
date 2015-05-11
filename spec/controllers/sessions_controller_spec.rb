@@ -3,31 +3,24 @@ require 'rails_helper'
 describe SessionsController do
 
   describe 'Get new' do
-    context 'with authenticated user' do 
-      it 'renders the new template' do 
-        session[:user_id] = nil
-        get :new
-        expect(response).to render_template :new
-      end
-    end
-    context 'with unauthenticated user' do
-      it 'should redirect to home_path' do 
+      it 'should redirect to home_path if user is already logged in' do 
         session[:user_id] = Fabricate(:user).id
         get :new
         expect(response).to redirect_to home_path
       end
-    end
   end
 
   describe 'Post create' do
     context 'with valid credentials' do
+      
+      let(:thupten) {Fabricate(:user)}
+
       before do
-        @thupten = Fabricate(:user)
-        post :create, email: @thupten.email, password: @thupten.password
+        post :create, email: thupten.email, password: thupten.password
       end 
 
       it 'sets sessions[:user_id]' do
-        expect(session[:user_id]).to eq(@thupten.id)
+        expect(session[:user_id]).to eq(thupten.id)
       end
 
       it 'redirects to home_path after successful login' do
@@ -40,8 +33,10 @@ describe SessionsController do
     end
 
     context 'with invalid credentials' do
+
+      let(:thupten) { Fabricate(:user) }
+      
       before do
-        thupten = Fabricate(:user)
         post :create, email: thupten.email, password: 'wrongpassword'
       end
 
