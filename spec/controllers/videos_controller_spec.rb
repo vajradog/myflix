@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 describe VideosController do
-  # before { session[:user_id] = Fabricate(:user).id }
-
   describe "GET show" do 
     it "sets @video for authenticated user" do 
       session[:user_id] = Fabricate(:user).id
@@ -47,6 +45,5 @@ describe VideosController do
       get :search, search_term: "ponyo"
       expect(response).to redirect_to sign_in_path
     end
-
   end
 end

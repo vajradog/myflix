@@ -77,14 +77,14 @@ describe QueueItemsController do
     end
   end
 
-  describe "DELETE destory" do
+  describe "DELETE destroy" do
     context "with authenticated user" do
 
-      let(:thupten) { Fabricate(:user)}
+      let(:thupten) { Fabricate(:user) }
 
       before { session[:user_id] = thupten.id }
 
-      it "should redirect to my queue page" do
+      it "redirects to my queue page" do
         queue_item = Fabricate(:queue_item)
         delete :destroy, id: queue_item.id
         expect(response).to redirect_to my_queue_path
@@ -113,9 +113,9 @@ describe QueueItemsController do
 
     context "with unauthenticated user" do
       it "redirects to sign in page for unauthenticated user" do 
-      delete :destroy, id: 3
-      expect(response).to redirect_to sign_in_path 
-     end
+        delete :destroy, id: 3
+        expect(response).to redirect_to sign_in_path 
+      end
     end     
   end
 
@@ -125,11 +125,11 @@ describe QueueItemsController do
       let(:queue_item1) { Fabricate(:queue_item, user: don, video: video, position: 1) }
       let(:queue_item2) { Fabricate(:queue_item, user: don, video: video, position: 2) }
       let (:don) { Fabricate(:user) }
-      let(:video) { Fabricate(:video)}
+      let(:video) { Fabricate(:video) }
 
       before { session[:user_id] = don.id }
 
-      it "should redirect to my queue page" do
+      it "redirects to my queue page" do
         post :update_queue, queue_items: [{id: queue_item1.id, position: 2}, {id: queue_item2, position: 1}]
         expect(response).to redirect_to my_queue_path
       end
@@ -137,22 +137,20 @@ describe QueueItemsController do
       it "reorders the queue" do 
         post :update_queue, queue_items: [{id: queue_item1.id, position: 2}, {id: queue_item2.id, position: 1}]
         expect(don.queue_items).to eq([queue_item2, queue_item1])
-        #expect(queue_item1.position).to eq(2)
       end
 
       it "normalized the position numbers" do 
         post :update_queue, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 2}]
         expect(don.queue_items.map(&:position)).to eq([1,2])
-        # this will fail initially, you need to reload
       end
     end
 
     context "with invalid input" do
 
-      let (:don) { Fabricate(:user) }
+      let(:don) { Fabricate(:user) }
       let(:queue_item1) { Fabricate(:queue_item, user: don, video: video, position: 1) }
       let(:queue_item2) { Fabricate(:queue_item, user: don, video: video, position: 2) }
-      let(:video) { Fabricate(:video)}
+      let(:video) { Fabricate(:video) }
 
       before {session[:user_id] = don.id}
 
@@ -191,3 +189,4 @@ describe QueueItemsController do
     end
   end
 end
+
