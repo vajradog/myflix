@@ -13,7 +13,7 @@ describe SessionsController do
   describe 'Post create' do
     context 'with valid credentials' do
       
-      let(:thupten) {Fabricate(:user)}
+      let(:thupten) { Fabricate(:user) }
 
       before do
         post :create, email: thupten.email, password: thupten.password

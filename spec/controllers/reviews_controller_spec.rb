@@ -62,7 +62,6 @@ describe ReviewsController do
         it 'sets the error message' do
           expect(flash[:error]).not_to be_blank
         end
-
       end
     end
       
