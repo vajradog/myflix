@@ -1,4 +1,3 @@
-
 shared_examples "require_sign_in" do
   it "redirects to sign in page" do
     clear_current_user

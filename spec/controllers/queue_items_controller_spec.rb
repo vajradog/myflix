@@ -176,4 +176,3 @@ describe QueueItemsController do
     end
   end
 end
-
