@@ -24,7 +24,7 @@ feature "user signs in" do
 
   def sign_in_with_invalid_credentials
     tom = Fabricate(:user)
-    visit ('/sign_in')
+    visit('/sign_in')
     fill_in('email', with: tom.email)
     fill_in('password', with: "wrong_password")
     click_button('Login')

@@ -48,7 +48,7 @@ describe QueueItemsController do
         Fabricate(:queue_item, video: monk, user: current_user)
         southpark = Fabricate(:video)
         post :create, video_id: southpark.id
-        southpark_queue_item = QueueItem.where(video_id: southpark.id, user_id: current_user.id).first
+        southpark_queue_item = QueueItem.find_by(video_id: southpark.id, user_id: current_user.id)
         expect(southpark_queue_item.position).to eq(2)
       end
 
@@ -56,7 +56,7 @@ describe QueueItemsController do
         Fabricate(:queue_item, video: monk, user: current_user)
         southpark = Fabricate(:video)
         post :create, video_id: monk.id
-        southpark_queue_item = QueueItem.where(video_id: southpark.id, user_id: current_user.id).first
+        southpark_queue_item = QueueItem.find_by(video_id: southpark.id, user_id: current_user.id)
         expect(current_user.queue_items.count).to eq(1)
       end
     end
@@ -77,25 +77,25 @@ describe QueueItemsController do
       expect(response).to redirect_to my_queue_path
     end
 
-   it "delete the queue item" do 
+    it "deletes the queue item" do 
       queue_item = Fabricate(:queue_item, user: current_user)
       delete :destroy, id: queue_item.id
       expect(QueueItem.count).to eq(0)
-   end
+    end
 
-   it "does not delete the queue item if the current user does not own" do
+    it "does not delete the queue item if the current user does not own" do
       kevin = Fabricate(:user)
       kevin_queue_item = Fabricate(:queue_item, user: kevin)
       delete :destroy, id: kevin_queue_item.id
       expect(QueueItem.count).to eq(1) 
-   end
+    end
 
-   it "normalizes the remaining queue_items after destroy" do 
+    it "normalizes the remaining queue_items after destroy" do 
       queue_item1 = Fabricate(:queue_item, user: current_user, position: 1)
       queue_item2 = Fabricate(:queue_item, user: current_user, position: 2)
       delete :destroy, id: queue_item1.id
       expect(QueueItem.first.position).to eq(1)
-   end
+    end
 
     context "with unauthenticated user" do
       it_behaves_like "require_sign_in" do
@@ -156,9 +156,7 @@ describe QueueItemsController do
     context "with unauthorized user" do
       
       it_behaves_like "require_sign_in" do
-        let(:action) { 
-          post :update_queue, queue_items: [{id: 1, position: 3}, 
-            {id: 2, position: 1.7}] }
+        let(:action) { post :update_queue, queue_items: [{id: 1, position: 3}, {id: 2, position: 1.7}] }
       end
     end
 

@@ -12,8 +12,8 @@ def clear_current_user
 end
 
 def sign_in(a_user=nil)
-  user = a_user || Fabricate(:user)
-  visit ('/sign_in')
+  user ||= a_user || Fabricate(:user)
+  visit('/sign_in')
   fill_in('email', with: user.email)
   fill_in('password', with: user.password)
   click_button('Login')  

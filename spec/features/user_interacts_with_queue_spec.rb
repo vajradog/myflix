@@ -2,10 +2,10 @@ require 'rails_helper'
 
 feature "User interacts with the queue" do
   scenario "user adds video and reorders video in queue" do
-    comedies = Fabricate(:category)
-    monk = Fabricate(:video, title: "Monk", category: comedies)
-    south_park = Fabricate(:video, title: "South Park", category: comedies)
-    futurama = Fabricate(:video, title: "Futurama", category: comedies)
+    comedies    = Fabricate(:category)
+    monk        = Fabricate(:video, title: "Monk", category: comedies)
+    south_park  = Fabricate(:video, title: "South Park", category: comedies)
+    futurama    = Fabricate(:video, title: "Futurama", category: comedies)
     
     sign_in
     add_video_to_queue(monk)
