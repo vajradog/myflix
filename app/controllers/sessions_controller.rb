@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "Signed in"
       redirect_to home_path
     else
-      flash[:error] = "Something wrong with your password or email"
+      flash[:error] = "Either your password or email is incorrect"
       redirect_to sign_in_path
     end 
   end
