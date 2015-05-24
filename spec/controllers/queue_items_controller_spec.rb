@@ -3,7 +3,7 @@ require 'rails_helper'
 describe QueueItemsController do
   
   describe "GET index" do 
-    it "sets the @queue_items to the queue items of the signed in user" do\
+    it "sets the @queue_items to the queue items of the signed in user" do
       set_current_user
       queue_item1 = Fabricate(:queue_item, user: current_user)
       queue_item2 = Fabricate(:queue_item, user: current_user)
