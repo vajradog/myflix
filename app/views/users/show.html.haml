@@ -6,9 +6,7 @@
           %img/
           %h2
             = @user.full_name
-            's video collections
-            %span{"data-id" => "queue_items.count"}
-              (#{@user.queue_items.count})
+            's video collections (#{@user.queue_items.count})
           = link_to 'Follow', relationships_path(leader_id: @user.id), method: :post, class: 'btn btn-default' if current_user.can_follow?(@user)
         %table.table
           %thead
