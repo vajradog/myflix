@@ -1,6 +1,5 @@
-def set_current_user
-  thupten = Fabricate(:user)
-  session[:user_id] = thupten.id
+def set_current_user(user=nil)
+  session[:user_id] = (user || Fabricate(:user).id)
 end
 
 def current_user
@@ -18,3 +17,5 @@ def sign_in(a_user=nil)
   fill_in('password', with: user.password)
   click_button('Login')  
 end
+
+

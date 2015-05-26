@@ -5,7 +5,7 @@
         <header>
           <img/>
           <h2><%= @user.full_name %>'s video collections <span data-id="queue_items.count">(<%= @user.queue_items.count %>)</span></h2>
-          <button class="btn btn-default">Follow</button>
+          <%= link_to 'Follow', relationships_path(leader_id: @user.id), method: :post, class: 'btn btn-default' if current_user.can_follow?(@user) %>
         </header>
         <table class="table">
           <thead>
