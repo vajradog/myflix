@@ -18,5 +18,5 @@
   = link_to "Cancel", @video
 - @reviews.each do |review|
   = review.rating
-  = review.user.full_name
+  = link_to review.user.full_name, review.user
   = review.content
