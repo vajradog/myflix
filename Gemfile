@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.1'
+ruby '2.2.2'
 
 gem 'bootstrap-sass'
 gem 'coffee-rails'
@@ -18,6 +18,7 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+  gem 'letter_opener'
 end
 
 group :development, :test do
