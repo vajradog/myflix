@@ -8,6 +8,11 @@ describe User do
   it { should have_many(:queue_items).order("position") } 
   it { should have_many(:reviews).order("created_at DESC") }
 
+  it "returns nil for user token when not issuing password reset requests" do
+    alice = Fabricate(:user)
+    expect(alice.token).to be_nil
+  end
+
   describe "#queued_video?" do
     it "returns true when the user queued the video" do
       user = Fabricate(:user)
