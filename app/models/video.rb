@@ -10,5 +10,4 @@ class Video < ActiveRecord::Base
     search_term.downcase!
     where("lower(title) LIKE ?", "%#{search_term}%").order("created_at DESC")
   end
-
 end

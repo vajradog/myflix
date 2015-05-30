@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe RelationshipsController do   
-  describe 'GET index' do     
-    it "sets @relationships to the current user's following 
+describe RelationshipsController do
+  describe 'GET index' do
+    it "sets @relationships to the current user's following
     relationships" do
       alice = Fabricate(:user)
       set_current_user(alice)
@@ -15,7 +15,7 @@ describe RelationshipsController do
     it_behaves_like "require_sign_in" do
       let(:action) { get :index }
     end
-  end 
+  end
 
   describe 'DELETE destroy' do
     it_behaves_like "require_sign_in" do
@@ -31,7 +31,7 @@ describe RelationshipsController do
       expect(Relationship.count).to eq(0)
     end
 
-    it "redirects to people page" do 
+    it "redirects to people page" do
       alice = Fabricate(:user)
       set_current_user(alice)
       bob = Fabricate(:user)
@@ -87,5 +87,5 @@ describe RelationshipsController do
       post :create, leader_id: alice.id
       expect(Relationship.count).to eq(0)
     end
-  end 
+  end
 end

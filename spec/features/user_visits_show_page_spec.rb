@@ -10,7 +10,7 @@ feature "user visits show page" do
   end
 
   scenario "when unauthenticated, is redirected to sign in page" do
-    visit sign_out_path 
+    visit sign_out_path
     visit user_path(alice)
     expect(current_path).to eq sign_in_path
   end
@@ -35,10 +35,10 @@ feature "user visits show page" do
   scenario "when authenticated, displays the video ratings of the user" do
     review = Fabricate(:review, video_id: video.id, user_id: alice.id, rating: 2)
     visit user_path(alice)
-    expect_page_to_have(review.rating) 
+    expect_page_to_have(review.rating)
   end
 
   def expect_page_to_have(content)
-    expect(page).to have_content(content) 
+    expect(page).to have_content(content)
   end
 end

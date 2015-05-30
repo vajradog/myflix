@@ -3,21 +3,21 @@ require 'rails_helper'
 describe SessionsController do
 
   describe 'Get new' do
-      it 'redirects to home_path if user is already logged in' do 
-        set_current_user
-        get :new
-        expect(response).to redirect_to home_path
-      end
+    it 'redirects to home_path if user is already logged in' do
+      set_current_user
+      get :new
+      expect(response).to redirect_to home_path
+    end
   end
 
   describe 'Post create' do
     context 'with valid credentials' do
-      
+
       let(:thupten) { Fabricate(:user) }
 
       before do
         post :create, email: thupten.email, password: thupten.password
-      end 
+      end
 
       it 'sets sessions[:user_id]' do
         expect(session[:user_id]).to eq(thupten.id)
@@ -35,7 +35,7 @@ describe SessionsController do
     context 'with invalid credentials' do
 
       let(:thupten) { Fabricate(:user) }
-      
+
       before do
         post :create, email: thupten.email, password: 'wrongpassword'
       end
@@ -54,17 +54,17 @@ describe SessionsController do
     end
   end
 
-  describe 'Destroy session' do 
+  describe 'Destroy session' do
     before do
       session[:user_id] = Fabricate(:user).id
       get :destroy
     end
-    
-    it 'sets session[:user_id] to nil' do 
+
+    it 'sets session[:user_id] to nil' do
       expect(session[:user_id]).to eq(nil)
     end
 
-    it 'redirects to root path' do 
+    it 'redirects to root path' do
       expect(response).to redirect_to root_path
     end
 
@@ -73,5 +73,3 @@ describe SessionsController do
     end
   end
 end
-
-

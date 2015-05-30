@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   has_secure_password validations: false
   validates_presence_of :email, :full_name, :password
   validates_uniqueness_of :email
+  validates :password, length: { minimum: 6 }
   has_many :reviews, -> { order 'created_at DESC' }
   has_many :queue_items,-> { order 'position' }
   has_many :following_relationships, class_name: "Relationship", foreign_key: :follower_id
@@ -23,5 +24,14 @@ class User < ActiveRecord::Base
 
   def can_follow?(another_user)
     !(self.follows?(another_user) || self == another_user)
+  end
+
+  def generate_token!
+    token = SecureRandom.urlsafe_base64
+    update_column(:token, token)
+  end
+
+  def destroy_token
+    update_column(:token, nil)
   end
 end

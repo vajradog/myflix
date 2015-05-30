@@ -13,7 +13,7 @@ describe QueueItem do
     end
   end
 
-  describe "#category_name" do 
+  describe "#category_name" do
     it "returns the category name of the video" do
       category = Fabricate(:category, name: "Drama")
       video = Fabricate(:video, category: category)
@@ -22,7 +22,7 @@ describe QueueItem do
     end
   end
 
-  describe "#category" do 
+  describe "#category" do
     it "returns the category name of the video" do
       category = Fabricate(:category, name: "Drama")
       video = Fabricate(:video, category: category)
@@ -51,13 +51,13 @@ describe QueueItem do
     let(:user) { Fabricate(:user) }
     let(:queue_item) { Fabricate(:queue_item, video: video, user: user) }
 
-    it "changes the rating of the review if review is present" do 
+    it "changes the rating of the review if review is present" do
       review = Fabricate(:review, user: user, video: video, rating: 2)
       queue_item.rating = 4
       expect(queue_item.rating).to eq(4)
     end
 
-    it "clears the rating of the review if review present" do 
+    it "clears the rating of the review if review present" do
       review = Fabricate(:review, user: user, video: video, rating: 2)
       queue_item.rating = nil
       expect(Review.first.rating).to be_nil

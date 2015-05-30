@@ -6,7 +6,7 @@ feature "User following" do
     category = Fabricate(:category)
     video = Fabricate(:video, category: category)
     Fabricate(:review, video_id: video.id, user_id: alice.id)
-    
+
     sign_in
     click_on_the_video(video)
     click_link alice.full_name
@@ -16,7 +16,7 @@ feature "User following" do
     unfollow(alice)
     leaders_name_should_not_be_present_on_people_page(alice)
   end
-  
+
   def click_on_the_video(video)
     find("a[href='/videos/#{video.id}']").click
   end

@@ -5,6 +5,5 @@ class UiController < ApplicationController
 
   layout "application"
 
-  def index
-  end
+  def index; end
 end

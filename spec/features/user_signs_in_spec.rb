@@ -13,7 +13,7 @@ feature "user signs in" do
   end
 
   scenario "with invalid credentials and gets redirected to sign in page" do
-    sign_in_with_invalid_credentials  
+    sign_in_with_invalid_credentials
     expect_page_to_have_content("Email")
   end
 

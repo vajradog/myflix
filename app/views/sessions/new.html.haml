@@ -1,9 +1,7 @@
-/ need to format it to bootstrap_form
-
 = form_tag sessions_path do
   = label_tag :email
   = email_field_tag :email, params[:email] || ''
   = label_tag :password
   = password_field_tag :password, params[:password] || ''
   = submit_tag 'Login', class: "btn btn-default"
-
+  = link_to "Forgot Password?", forgot_password_path
