@@ -24,8 +24,8 @@ class PasswordResetsController < ApplicationController
   def check_and_save_password(user)
     if user.save
       flash[:notice] = "Password was reset"
-      redirect_to sign_in_path
       user.destroy_token
+      redirect_to sign_in_path
     else
       flash.now[:notice] = "Password must be atleast 6 characters long"
       @token = user.token
