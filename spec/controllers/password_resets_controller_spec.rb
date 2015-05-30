@@ -3,17 +3,13 @@ require 'rails_helper'
 describe PasswordResetsController do
   describe "GET show" do
     it "renders show template if token is valid" do
-      alice = Fabricate(:user)
-      alice.update_column(:token, '123')
-      alice.save
+      Fabricate(:user, token: '123')
       get :show, id:'123'
       expect(response).to render_template :show
     end
 
     it "sets @token" do
-      alice = Fabricate(:user)
-      alice.update_column(:token, '123')
-      alice.save
+      Fabricate(:user, token: '123')
       get :show, id:'123'
       expect(assigns(:token)).to eq('123')
     end
@@ -34,8 +30,7 @@ describe PasswordResetsController do
       end
 
       it "sets the flash success message" do
-        alice = Fabricate(:user, password: 'old_password')
-        alice.update_column(:token, '123')
+        alice = Fabricate(:user, password: 'old_password', token: '123')
         post :create, token:'123', password: 'new_password'
         expect(flash[:notice]).to_not be_empty
       end

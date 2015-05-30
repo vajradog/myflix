@@ -15,7 +15,5 @@ def sign_in(a_user=nil)
   visit('/sign_in')
   fill_in('email', with: user.email)
   fill_in('password', with: user.password)
-  click_button('Login')  
+  click_button('Login')
 end
-
-

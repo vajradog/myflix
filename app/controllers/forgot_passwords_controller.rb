@@ -1,7 +1,6 @@
 class ForgotPasswordsController < ApplicationController
-
   def create
-    user = User.where(email: params[:email]).first
+    user = User.find_by(email: params[:email])
     if user
       @token = user.generate_token
       user.update_column(:token, @token)
@@ -17,10 +16,7 @@ class ForgotPasswordsController < ApplicationController
     if params[:email].blank?
       "Email cannot be blank"
     else
-      "Email does not exist in our system" 
+      "Email does not exist in our system"
     end
   end
 end
-
-
-

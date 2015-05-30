@@ -6,22 +6,22 @@ feature "User interacts with the queue" do
     monk        = Fabricate(:video, title: "Monk", category: comedies)
     south_park  = Fabricate(:video, title: "South Park", category: comedies)
     futurama    = Fabricate(:video, title: "Futurama", category: comedies)
-    
+
     sign_in
     add_video_to_queue(monk)
     expect_video_to_be_in_queue(monk)
-    
+
     visit video_path(monk)
     expect_link_to_be_hidden("+ My Queue")
-    
+
     add_video_to_queue(futurama)
-    add_video_to_queue(south_park) 
+    add_video_to_queue(south_park)
 
     set_video_position(monk, 3)
     set_video_position(south_park, 2)
     set_video_position(futurama, 1)
     update_queue
-    
+
     expect_video_position(monk, 3)
     expect_video_position(south_park, 2)
     expect_video_position(futurama, 1)

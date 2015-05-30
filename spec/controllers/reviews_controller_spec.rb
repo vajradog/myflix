@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 describe ReviewsController do
-  
+
   describe 'Post create' do
     let(:video) { Fabricate(:video) }
 
     context "with authenticated user" do
-      
+
       before { set_current_user }
 
       context "with valid inputs" do
@@ -18,11 +18,11 @@ describe ReviewsController do
           expect(response).to redirect_to video
         end
 
-        it "creates a review" do 
+        it "creates a review" do
           expect(Review.count).to eq(1)
         end
 
-        it "creates a review associated with a video" do 
+        it "creates a review associated with a video" do
           expect(Review.first.video).to eq(video)
         end
 
@@ -35,12 +35,12 @@ describe ReviewsController do
         end
       end
 
-      context "with invalid inputs" do 
+      context "with invalid inputs" do
         before do
           post :create, review: {rating: 2}, video_id: video.id
-        end 
+        end
 
-        it "does not create a review" do 
+        it "does not create a review" do
           expect(Review.count).to eq(0)
         end
 
@@ -63,11 +63,11 @@ describe ReviewsController do
         end
       end
     end
-      
+
     context "with unauthenticated user" do
-      it_behaves_like "require_sign_in" do 
-        let(:action) { post :create, 
-          review: Fabricate.attributes_for(:review), 
+      it_behaves_like "require_sign_in" do
+        let(:action) { post :create,
+          review: Fabricate.attributes_for(:review),
           video_id: video.id }
       end
     end

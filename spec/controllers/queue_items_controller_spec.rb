@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe QueueItemsController do
-  
-  describe "GET index" do 
+
+  describe "GET index" do
     it "sets the @queue_items to the queue items of the signed in user" do
       set_current_user
       queue_item1 = Fabricate(:queue_item, user: current_user)
@@ -18,13 +18,13 @@ describe QueueItemsController do
     end
   end
 
-  describe "POST create" do 
+  describe "POST create" do
     context "with authenticated user" do
 
       before { set_current_user }
       let(:monk) { Fabricate(:video) }
 
-      it "redirects to my queue page" do 
+      it "redirects to my queue page" do
         post :create, video_id: monk.id
         expect(response).to redirect_to my_queue_path
       end
@@ -52,7 +52,7 @@ describe QueueItemsController do
         expect(southpark_queue_item.position).to eq(2)
       end
 
-      it "does not add the same video twice" do 
+      it "does not add the same video twice" do
         Fabricate(:queue_item, video: monk, user: current_user)
         southpark = Fabricate(:video)
         post :create, video_id: monk.id
@@ -77,7 +77,7 @@ describe QueueItemsController do
       expect(response).to redirect_to my_queue_path
     end
 
-    it "deletes the queue item" do 
+    it "deletes the queue item" do
       queue_item = Fabricate(:queue_item, user: current_user)
       delete :destroy, id: queue_item.id
       expect(QueueItem.count).to eq(0)
@@ -87,10 +87,10 @@ describe QueueItemsController do
       kevin = Fabricate(:user)
       kevin_queue_item = Fabricate(:queue_item, user: kevin)
       delete :destroy, id: kevin_queue_item.id
-      expect(QueueItem.count).to eq(1) 
+      expect(QueueItem.count).to eq(1)
     end
 
-    it "normalizes the remaining queue_items after destroy" do 
+    it "normalizes the remaining queue_items after destroy" do
       queue_item1 = Fabricate(:queue_item, user: current_user, position: 1)
       queue_item2 = Fabricate(:queue_item, user: current_user, position: 2)
       delete :destroy, id: queue_item1.id
@@ -118,12 +118,12 @@ describe QueueItemsController do
         expect(response).to redirect_to my_queue_path
       end
 
-      it "reorders the queue" do 
+      it "reorders the queue" do
         post :update_queue, queue_items: [{id: queue_item1.id, position: 2}, {id: queue_item2.id, position: 1}]
         expect(current_user.queue_items).to eq([queue_item2, queue_item1])
       end
 
-      it "normalizes the position numbers" do 
+      it "normalizes the position numbers" do
         post :update_queue, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 2}]
         expect(current_user.queue_items.map(&:position)).to eq([1,2])
       end
@@ -147,14 +147,14 @@ describe QueueItemsController do
         expect(flash[:error]).to be_present
       end
 
-      it "does not change the queue items" do 
+      it "does not change the queue items" do
         post :update_queue, queue_items: [{id: queue_item1.id, position: 3}, {id: queue_item2.id, position: 1.7}]
         expect(queue_item1.reload.position).to eq(1)
       end
     end
 
     context "with unauthorized user" do
-      
+
       it_behaves_like "require_sign_in" do
         let(:action) { post :update_queue, queue_items: [{id: 1, position: 3}, {id: 2, position: 1.7}] }
       end

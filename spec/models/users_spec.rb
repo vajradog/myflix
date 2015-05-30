@@ -1,17 +1,12 @@
 require 'rails_helper'
 
-describe User do 
+describe User do
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:full_name) }
   it { should validate_presence_of(:password) }
   it { should validate_uniqueness_of(:email) }
-  it { should have_many(:queue_items).order("position") } 
+  it { should have_many(:queue_items).order("position") }
   it { should have_many(:reviews).order("created_at DESC") }
-
-  it "returns nil for user token when not issuing password reset requests" do
-    alice = Fabricate(:user)
-    expect(alice.token).to be_nil
-  end
 
   describe "#queued_video?" do
     it "returns true when the user queued the video" do
@@ -28,7 +23,7 @@ describe User do
     end
   end
 
-  describe "#follows?" do 
+  describe "#follows?" do
     it "returns true if the user has a following relationship with another user" do
       alice = Fabricate(:user)
       bob = Fabricate(:user)
