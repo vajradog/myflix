@@ -22,10 +22,6 @@ describe ForgotPasswordsController do
         expect(response).to redirect_to forgot_password_confirmation_path
       end
 
-      it "generates token" do
-        expect(assigns(:token)).to be_present
-      end
-
       it "sends email to the users email address" do
         expect(ActionMailer::Base.deliveries.last.to).to eq([john.email])
       end

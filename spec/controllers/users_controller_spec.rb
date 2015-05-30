@@ -12,7 +12,7 @@ describe UsersController do
   describe "Post create" do
     context "with valid data" do
       before do
-        post :create, user: {email:"sad@y.com", password:"kk", full_name:"John Doe"}
+        post :create, user: {email:"sad@y.com", password:"password", full_name:"John Doe"}
       end
 
       it "creates a user" do
@@ -20,7 +20,7 @@ describe UsersController do
       end
 
       it "signs in the new user" do
-        post :create, user: {email:"sad@y.com", password:"kk", full_name:"John Doe"}
+        post :create, user: {email:"sad@y.com", password:"password", full_name:"John Doe"}
         expect(session[:user_id]).to_not be_nil
       end
 
@@ -33,18 +33,18 @@ describe UsersController do
       after { ActionMailer::Base.deliveries.clear }
 
       it "sends email to user with valid inputs" do
-        post :create, user: {email:"sad@y.com", password:"kk", full_name:"John Doe"}
+        post :create, user: {email:"sad@y.com", password:"password", full_name:"John Doe"}
         expect(ActionMailer::Base.deliveries).to_not be_empty
       end
 
       it "sends email to the right recipient with valid inputs" do
-        post :create, user: {email:"sad@y.com", password:"kk", full_name:"John Doe"}
+        post :create, user: {email:"sad@y.com", password:"password", full_name:"John Doe"}
         message = ActionMailer::Base.deliveries.last
         expect(message.to).to eq(["sad@y.com"])
       end
 
       it "sends email with users name with valid inputs" do
-        post :create, user: {email:"sad@y.com", password:"kk", full_name:"John Doe"}
+        post :create, user: {email:"sad@y.com", password:"password", full_name:"John Doe"}
         message = ActionMailer::Base.deliveries.last
         expect(message.body).to include("John Doe")
       end
