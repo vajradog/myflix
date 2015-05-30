@@ -26,10 +26,10 @@ class User < ActiveRecord::Base
   end
 
   def generate_token
-    self.token = SecureRandom.urlsafe_base64
+    SecureRandom.urlsafe_base64
   end
 
   def destroy_token
-    self.update_column(:token, nil)
+    update_column(:token, nil)
   end
 end
