@@ -9,7 +9,20 @@ describe User do
   it { should have_many(:queue_items).order("position") }
   it { should have_many(:reviews).order("created_at DESC") }
 
+  describe "#follow" do
+    it "follows another user" do
+      alice = Fabricate(:user)
+      bob = Fabricate(:user)
+      alice.follow(bob)
+      expect(alice.follows?(bob)).to be true
+    end
 
+    it "does not follow one self" do
+      alice = Fabricate(:user)
+      alice.follow(alice)
+      expect(alice.follows?(alice)).to be false
+    end
+  end
 
   describe "#queued_video?" do
     it "returns true when the user queued the video" do

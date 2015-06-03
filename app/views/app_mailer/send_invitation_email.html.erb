@@ -1,0 +1,8 @@
+<html>
+<body>
+<p>Please reset your password</p>
+<p>Hi, you were invited by <%= @invitation.inviter.full_name %> to join the cool website "MyFlix" </p>
+<p><%= @invitation.message %></p>
+<p><%= link_to "Accept this invitation", register_with_token_url(@invitation.token) %></p>
+</body>
+</html>

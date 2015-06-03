@@ -27,6 +27,29 @@ describe UsersController do
       it "redirects to home_path after save" do
         expect(response).to redirect_to home_path
       end
+
+      it "makes the user(friend) follow the inviter" do
+        alice = Fabricate(:user)
+        invitation = Fabricate(:invitation, inviter: alice, friends_email: "joe@example.com")
+        post :create, user: {email: "joe@example.com", password: "password", full_name: "Joe Donald"}, invitation_token: invitation.token
+        joe = User.find_by(email: "joe@example.com")
+        expect(joe.follows?(alice)).to be true
+      end
+
+      it "makes the inviter follow the user(friend)" do
+        alice = Fabricate(:user)
+        invitation = Fabricate(:invitation, inviter: alice, friends_email: "joe@example.com")
+        post :create, user: {email: "joe@example.com", password: "password", full_name: "Joe Donald"}, invitation_token: invitation.token
+        joe = User.find_by(email: "joe@example.com")
+        expect(alice.follows?(joe)).to be true
+      end
+
+      it "expires the invitation token expires upon acceptance" do
+        alice = Fabricate(:user)
+        invitation = Fabricate(:invitation, inviter: alice, friends_email: "joe@example.com")
+        post :create, user: {email: "joe@example.com", password: "password", full_name: "Joe Donald"}, invitation_token: invitation.token
+        expect(Invitation.first.token).to be_nil
+      end
     end
 
     context "send email" do
@@ -85,6 +108,25 @@ describe UsersController do
       get :show, id: mary.id
       expect(assigns(:user)).to eq(mary)
     end
+  end
 
+  describe "GET new_with_invitation_token" do
+    it "sets @user with friends email" do
+      invitation = Fabricate(:invitation)
+      get :new_with_invitation_token, token: invitation.token
+      expect(assigns(:user).email).to eq(invitation.friends_email)
+    end
+
+    it "redirects to expired token page for invalid token" do
+      invitation = Fabricate(:invitation)
+      get :new_with_invitation_token, token: "123"
+      expect(response).to redirect_to expired_token_path
+    end
+
+    it "sets the @invitation_token" do
+      invitation = Fabricate(:invitation)
+      get :new_with_invitation_token, token: invitation.token
+      expect(assigns(:invitation_token)).to eq(invitation.token)
+    end
   end
 end
