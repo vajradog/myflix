@@ -24,7 +24,10 @@ Myflix::Application.routes.draw do
   get "forgot_password_confirmation", to: "forgot_passwords#confirm"
   resources :password_resets, only: [:show, :create]
   resources :forgot_passwords, only: [:create]
-  get "expired_token", to: "password_resets#expired_token"
+  get "expired_token", to: "pages#expired_token"
+
+  resources :invitations, only: [:new, :create]
+  get 'register/:token', to: "users#new_with_invitation_token", as: "register_with_token"
 
   resources :categories, only: [:show]
   resources :users, only: [:create, :show]
