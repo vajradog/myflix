@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       handle_invitation
-      AppMailer.send_welcome_message(@user).deliver
+      AppMailer.delay.send_welcome_message(@user)
       session[:user_id] = @user.id
       redirect_to home_path, notice: "You are signed in"
     else
