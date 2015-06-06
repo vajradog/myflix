@@ -14,6 +14,7 @@ gem 'bootstrap_form'
 gem 'fabrication'
 gem 'faker'
 gem 'sidekiq'
+gem "sentry-raven"
 
 group :development do
   gem 'thin'
