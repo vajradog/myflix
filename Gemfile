@@ -15,6 +15,10 @@ gem 'fabrication'
 gem 'faker'
 gem 'sidekiq'
 gem "sentry-raven"
+gem "carrierwave"
+gem "mini_magick"
+gem 'carrierwave-aws'
+
 
 group :development do
   gem 'thin'
