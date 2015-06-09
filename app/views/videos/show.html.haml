@@ -9,6 +9,7 @@
           %span Rating: 4.5/5.0
         %p= @video.description
         .actions
+          = link_to "Watch Now", @video.video_url, class: 'btn btn-success'
           = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default' unless current_user.queued_video?(@video)
 
 = form_for [@video, Review.new] do |f|
