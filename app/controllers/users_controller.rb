@@ -9,9 +9,23 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       handle_invitation
-      AppMailer.delay.send_welcome_message(@user)
-      session[:user_id] = @user.id
-      redirect_to home_path, notice: "You are signed in"
+      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+      stripetoken = params[:stripeToken]
+
+      begin
+        Stripe::Charge.create(
+          :amount => 1000,
+          :currency => "usd",
+          :source => stripetoken,
+          :description => "Example charge"
+        )
+        AppMailer.delay.send_welcome_message(@user)
+        session[:user_id] = @user.id
+        redirect_to home_path, notice: "Thank you for your support! You are signed in"
+      rescue Stripe::CardError => e
+        flash[:error]= e.message
+        render :new
+      end
     else
       render :new
     end
